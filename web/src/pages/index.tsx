@@ -32,9 +32,10 @@ const Index = () => {
       {!data && fetching? (
         <div> Loading... </div> ):( 
           <Stack spacing={8}>
-          { data!.posts.posts.map((p) => (
+          { data!.posts!.posts!.map((p) => (
             <Box p={5} shadow="md" borderWidth="1px">
-              <Heading fontSize="xl">{p.title}</Heading>
+              <Heading fontSize="xl">{p.title}</Heading> 
+              <Text> Posted by {p.creatorName} </Text>
               <Text mt={4}>{p.textSnippet}</Text>
             </Box> 
             )) 
@@ -47,7 +48,7 @@ const Index = () => {
         <Button onClick={() => {
           setVariables({
             limit: variables.limit,
-            cursor: data.posts.posts[data.posts.posts.length - 1].createdAt
+            cursor: data!.posts!.posts![data!.posts!.posts!.length - 1].createdAt
           })
         }}isLoading={fetching} m="auto" my={8}> 
           Load More 

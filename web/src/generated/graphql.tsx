@@ -33,8 +33,19 @@ export type QueryPostArgs = {
 
 export type PaginatedPosts = {
   __typename?: 'PaginatedPosts';
-  posts: Array<Post>;
+  posts: Array<PostType>;
   hasMore: Scalars['Boolean'];
+};
+
+export type PostType = {
+  __typename?: 'PostType';
+  creatorName: Scalars['String'];
+  creatorId: Scalars['String'];
+  id: Scalars['Float'];
+  points: Scalars['Float'];
+  textSnippet: Scalars['String'];
+  title: Scalars['String'];
+  createdAt: Scalars['String'];
 };
 
 export type Post = {
@@ -44,6 +55,7 @@ export type Post = {
   text: Scalars['String'];
   points: Scalars['Float'];
   creatorId: Scalars['Float'];
+  creator: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   textSnippet: Scalars['String'];
@@ -60,6 +72,7 @@ export type User = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  vote: Scalars['Boolean'];
   createPost?: Maybe<Post>;
   updatePost: Post;
   deletePost: Scalars['Boolean'];
@@ -68,6 +81,12 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
+};
+
+
+export type MutationVoteArgs = {
+  value: Scalars['Int'];
+  posId: Scalars['Int'];
 };
 
 
@@ -254,8 +273,8 @@ export type PostsQuery = (
     { __typename?: 'PaginatedPosts' }
     & Pick<PaginatedPosts, 'hasMore'>
     & { posts: Array<(
-      { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'title' | 'textSnippet' | 'createdAt' | 'updatedAt' | 'points' | 'creatorId'>
+      { __typename?: 'PostType' }
+      & Pick<PostType, 'creatorName' | 'creatorId' | 'id' | 'title' | 'textSnippet' | 'createdAt' | 'points'>
     )> }
   ) }
 );
@@ -372,13 +391,13 @@ export const PostsDocument = gql`
     query Posts($limit: Int!, $cursor: String) {
   posts(limit: $limit, cursor: $cursor) {
     posts {
+      creatorName
+      creatorId
       id
       title
       textSnippet
       createdAt
-      updatedAt
       points
-      creatorId
     }
     hasMore
   }
