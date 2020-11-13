@@ -36,8 +36,8 @@ cd server
 npm run watch
 -----------------
 cd server
-npm run start
+npm run dev
 ----------------
-cd server
-npm run start
+cd web
+npm run dev
 ```
