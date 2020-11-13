@@ -3,7 +3,7 @@ This project only for learning purpose.
 
 #### Technology 📶
 * Backend: NodeJS
-* Front-end: NectJS
+* Front-end: NextJS, ChakraUI
 * Database: Redis, MySQL
 * Query Language: GraphQL
 
